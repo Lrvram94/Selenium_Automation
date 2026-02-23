@@ -18,11 +18,18 @@ public class BaseTest {
         String browser = ConfigReader.getBrowser();
         DriverManager.setDriver(browser);
         driver = DriverManager.getDriver();
-        driver.get(ConfigReader.getBaseUrl());
+        // Each test will navigate to its own URL using TestUrls
     }
 
     @AfterMethod
     public void tearDown() {
         DriverManager.quitDriver();
+    }
+    
+    /**
+     * Helper method to navigate to a URL
+     */
+    protected void navigateTo(String url) {
+        driver.get(url);
     }
 }

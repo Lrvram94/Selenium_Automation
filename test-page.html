@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Text Box Form</h1>
+    <form id="textBoxForm">
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+            <label for="userEmail">Email</label>
+            <input type="email" id="userEmail" name="userEmail" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="currentAddress">Current Address</label>
+            <textarea id="currentAddress" name="currentAddress" rows="3" placeholder="Enter your address"></textarea>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="output" style="margin-top: 20px; padding: 15px; background: #f0f0f0; display: none;">
+        <h3>Submitted Data:</h3>
+        <p><strong>Name:</strong> <span id="outputName"></span></p>
+        <p><strong>Email:</strong> <span id="outputEmail"></span></p>
+        <p><strong>Address:</strong> <span id="outputAddress"></span></p>
+    </div>
+
+    <script>
+        document.getElementById('textBoxForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('outputName').textContent = document.getElementById('fullName').value;
+            document.getElementById('outputEmail').textContent = document.getElementById('userEmail').value;
+            document.getElementById('outputAddress').textContent = document.getElementById('currentAddress').value;
+            document.getElementById('output').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
