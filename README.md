@@ -1,90 +1,188 @@
-# Selenium Automation Project
+# Selenium Test Automation Framework
 
-A Selenium WebDriver automation framework using Java and Page Object Model (POM) design pattern.
+A Selenium WebDriver automation framework using Java, TestNG, and Page Object Model (POM) design pattern for testing web applications.
 
 ## Project Structure
 
 ```
 Selenium_Project/
+│
+├── .github/
+│   └── workflows/
+│       └── maven-tests.yml          # GitHub Actions CI/CD workflow
+│
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   ├── pages/          # Page Object classes
-│   │   │   │   └── BasePage.java
-│   │   │   └── utils/          # Utility classes
+│   │   │   ├── pages/               # Page Object Model classes
+│   │   │   │   ├── BasePage.java
+│   │   │   │   └── Elements.java
+│   │   │   └── utils/               # Utility classes
+│   │   │       ├── ConfigReader.java
 │   │   │       ├── DriverManager.java
-│   │   │       └── ConfigReader.java
+│   │   │       └── TestUrls.java
 │   │   └── resources/
-│   │       └── config.properties
+│   │       └── config.properties    # Configuration file
+│   │
 │   └── test/
 │       └── java/
-│           └── tests/          # Test classes
-│               └── BaseTest.java
-├── testng.xml                  # TestNG suite configuration
-├── pom.xml                     # Maven dependencies
+│           └── tests/               # Test classes
+│               ├── BaseTest.java
+│               └── ElementsTest.java
+│
+├── target/
+│   └── surefire-reports/           # Test execution reports
+│
+├── testng.xml                       # TestNG suite configuration
+├── pom.xml                          # Maven dependencies
+├── mvnw & mvnw.cmd                  # Maven wrapper scripts
 └── README.md
 ```
 
 ## Technologies Used
 
-- **Java 11**
+- **Java 21**
 - **Selenium WebDriver 4.16.1**
 - **TestNG 7.8.0**
-- **WebDriverManager 5.6.3**
-- **Maven**
+- **WebDriverManager 5.6.3** - Automatic browser driver management
+- **Maven** - Build and dependency management
 
-## Setup Instructions
+## Prerequisites
 
-1. **Prerequisites:**
-   - Install Java JDK 11 or higher
-   - Install Maven
-   - Install an IDE (IntelliJ IDEA, Eclipse, or VS Code)
+- Java JDK 21 or higher
+- Chrome, Firefox, or Edge browser installed
+- IDE (IntelliJ IDEA, Eclipse, or VS Code) - optional
 
-2. **Clone or download the project**
+> **Note:** Maven installation is NOT required - this project includes Maven wrapper.
 
-3. **Install dependencies:**
+## Getting Started
+
+1. **Clone the repository**
    ```bash
-   mvn clean install
+   git clone <repository-url>
+   cd Selenium_Project
    ```
 
-4. **Configure test settings:**
-   - Update `src/main/resources/config.properties` with your application URL and browser preference
+2. **Verify Java installation**
+   ```bash
+   java -version
+   ```
+
+3. **Build the project**
+   
+   Windows:
+   ```bash
+   .\mvnw.cmd clean install
+   ```
+   
+   Mac/Linux:
+   ```bash
+   ./mvnw clean install
+   ```
 
 ## Running Tests
 
-### Using Maven:
+### Using Maven Wrapper (Recommended)
+
+Windows:
 ```bash
-mvn clean test
+.\mvnw.cmd test
 ```
 
-### Using TestNG XML:
+Mac/Linux:
 ```bash
-mvn test -DsuiteXmlFile=testng.xml
+./mvnw test
+```
+
+### Using TestNG XML Suite
+
+```bash
+.\mvnw.cmd test -DsuiteXmlFile=testng.xml
+```
+
+### Run with Specific Browser
+
+```bash
+.\mvnw.cmd test -Dbrowser=chrome   # default
+.\mvnw.cmd test -Dbrowser=firefox
+.\mvnw.cmd test -Dbrowser=edge
 ```
 
 ## Configuration
 
-Edit `config.properties` to customize:
-- Browser type (chrome, firefox, edge)
-- Base URL
-- Timeout values
+Edit `src/main/resources/config.properties`:
+
+```properties
+# Browser Configuration
+browser=chrome                    # Options: chrome, firefox, edge
+
+# Application URL
+baseUrl=https://demoqa.com
+
+# Timeout Configuration (in seconds)
+implicitWait=10
+explicitWait=15
+pageLoadTimeout=30
+```
+
+## CI/CD Integration
+
+This project includes a GitHub Actions workflow (`.github/workflows/maven-tests.yml`) that:
+- Runs tests automatically on push/pull requests to main, master, and develop branches
+- Supports manual workflow dispatch
+- Uses Ubuntu latest with Chrome
+- Uploads test reports as artifacts (30-day retention)
+
+## Test Reports
+
+After test execution, view reports at:
+- `target/surefire-reports/index.html`
+
+Windows:
+```bash
+start target/surefire-reports/index.html
+```
+
+Mac:
+```bash
+open target/surefire-reports/index.html
+```
+
+Linux:
+```bash
+xdg-open target/surefire-reports/index.html
+```
 
 ## Framework Features
 
-- **Page Object Model (POM)** design pattern
-- **WebDriverManager** for automatic driver management
-- **ThreadLocal** driver instance for parallel execution support
-- **Centralized configuration** management
-- **Reusable utility methods** in BasePage
-- **TestNG** for test execution and reporting
+- ✅ **Page Object Model (POM)** - Clean separation of test logic and page elements
+- ✅ **WebDriverManager** - No manual driver downloads required
+- ✅ **ThreadLocal WebDriver** - Thread-safe for parallel execution
+- ✅ **Externalized Configuration** - Easy environment management
+- ✅ **Explicit Waits** - Stable and reliable test execution
+- ✅ **TestNG Integration** - Powerful test orchestration and reporting
+- ✅ **CI/CD Ready** - GitHub Actions workflow included
+- ✅ **Cross-Browser Support** - Chrome, Firefox, and Edge
 
 ## Adding New Tests
 
-1. Create page objects in `src/main/java/pages/`
-2. Extend `BasePage` for common web element interactions
-3. Create test classes in `src/test/java/tests/`
-4. Extend `BaseTest` for automatic setup and teardown
+1. **Create Page Object:**
+   - Add new class in `src/main/java/pages/`
+   - Extend `BasePage` for reusable methods
+   - Define web elements using `@FindBy` annotations
 
-## Contact
+2. **Create Test Class:**
+   - Add new class in `src/test/java/tests/`
+   - Extend `BaseTest` for automatic setup/teardown
+   - Write test methods with `@Test` annotation
 
-For questions or issues, please contact the project maintainer.
+3. **Update TestNG Suite:**
+   - Add test class to `testng.xml` if needed
+
+## Project Highlights
+
+- Modern Page Object Model implementation
+- Clean, maintainable code structure
+- Industry-standard design patterns
+- Automated CI/CD pipeline
+- Comprehensive test reporting
