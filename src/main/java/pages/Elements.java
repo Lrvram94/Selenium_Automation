@@ -16,6 +16,12 @@ public class Elements extends BasePage {
     @FindBy(id = "currentAddress")
     public WebElement currentAddressField;
 
+    @FindBy(id = "downloadButton")
+    public WebElement downloadButton;
+
+    @FindBy(id = "uploadFile")
+    public WebElement uploadFileInput;  
+
     public Elements(WebDriver driver) {
         super(driver);
     }

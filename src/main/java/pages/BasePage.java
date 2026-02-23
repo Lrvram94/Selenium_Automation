@@ -6,6 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.io.File;
 
 /**
  * Base Page class that all Page Object classes will extend
@@ -34,6 +35,8 @@ public class BasePage {
     protected String getText(WebElement element) {
         return wait.until(ExpectedConditions.visibilityOf(element)).getText();
     }
+
+  
 
     protected boolean isDisplayed(WebElement element) {
         try {
