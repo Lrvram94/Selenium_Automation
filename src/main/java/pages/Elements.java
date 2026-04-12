@@ -22,6 +22,12 @@ public class Elements extends BasePage {
     @FindBy(id = "uploadFile")
     public WebElement uploadFileInput;  
 
+    @FindBy(id = "alertButton")
+    public WebElement alertButton;
+
+    @FindBy(id = "timerAlertButton")
+    public WebElement timerAlertButton;
+
     public Elements(WebDriver driver) {
         super(driver);
     }
